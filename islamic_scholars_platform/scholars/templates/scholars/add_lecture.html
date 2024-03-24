@@ -1,0 +1,6 @@
+<!-- add_lecture.html -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Lecture</button>
+</form>

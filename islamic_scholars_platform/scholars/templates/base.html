@@ -1,0 +1,42 @@
+
+<!-- base.html -->
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Islamic Scholars Platform{% endblock %}</title>
+    <!-- Add your CSS links or stylesheets here -->
+</head>
+<body>
+    <header>
+        <!-- Your header content goes here -->
+        <h1>Welcome to the Islamic Scholars Platform</h1>
+        <!-- You can include navigation links here -->
+        <nav>
+            <ul>
+                <li><a href="{% url 'landing_page' %}">Sign Out</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <!-- Add more navigation links as needed -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- This is where the content from other templates will be inserted -->
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Your footer content goes here -->
+        <p>&copy; 2024 Islamic Scholars Platform. All rights reserved.</p>
+    </footer>
+
+    <!-- Add your JavaScript scripts or links here -->
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!-- scholars/scholar_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Scholar List</h1>
+    <ul>
+        {% for scholar in scholars %}
+            <li>
+                <h2>{{ scholar.user.username }}</h2>
+                <p>Bio: {{ scholar.bio }}</p>
+                <p>Specialization: {{ scholar.specialization }}</p>
+                <p>Lectures Provided:</p>
+                <ul>
+                    {% for lecture in scholar.lectures.all %}
+                        <li>{{ lecture.title }} - {{ lecture.description }}</li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'book_session' scholar.id %}">Book Session</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

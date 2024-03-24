@@ -1,0 +1,12 @@
+<!-- scholars/templates/scholars/manage_availability.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Manage Availability</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Availability</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,24 @@
+<!-- templates/landing_page.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Platform</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Platform</h1>
+    </header>
+    <main>
+        <p>Connect with Islamic scholars, book one-on-one sessions, and attend lectures.</p>
+        <p>Sign up now to get started!</p>
+        <a href="{% url 'signup' %}">Sign Up</a>
+        <a href="{% url 'login' %}">Login</a>
+    </main>
+    <footer>
+        <p>&copy; 2024 Our Platform. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!-- scholars/templates/scholars/book_session.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Book Session</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Book Session</button>
+  </form>
+{% endblock %}

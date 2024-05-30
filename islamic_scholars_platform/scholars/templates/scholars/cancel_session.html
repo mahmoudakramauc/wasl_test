@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Cancel Session</h1>
+  <p>Are you sure you want to cancel your session?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, Cancel Session</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Your Sessions</h1>
+  <ul>
+    {% for user_session in user_sessions %}
+      <li>{{ user_session.session }} - {% if not user_session.is_cancelled %} Active {% else %} Cancelled {% endif %}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Book Session</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <label for="availability">Availability:</label>
+    <select name="availability" id="availability">
+      {% for availability in availabilities %}
+        <option value="{{ availability.id }}">{{ availability.day_of_week }} {{ availability.start_time }} to {{availability.end_time}} (Duration: {{ availability.duration }} minutes)</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label for="date_time">Date and Time:</label>
+    <input type="datetime-local" id="date_time" name="date_time" required><br><br>
+
+<label for="duration">Duration (minutes):</label>
+<select name="duration" id="duration">
+  {% for i in duration_range %}
+    <option value="{{ i }}">{{ i }}</option>
+  {% endfor %}
+</select><br><br>
+    <button type="submit" class="btn">Book Session</button>
+  </form>
+{% endblock %}

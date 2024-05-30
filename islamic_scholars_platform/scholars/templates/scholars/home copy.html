@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+  .card-container {
+    display: flex;
+    flex-wrap: nowrap; /* Ensure items don't wrap to the next line */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+    margin-top: 1rem;
+  }
+
+  .card {
+    flex: 0 0 auto; /* Maintain initial width for each card */
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+    padding: 1rem;
+    width: 300px; /* Set the width of each card */
+  }
+
+  .card h3 {
+    margin-top: 0;
+  }
+
+  .card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .card ul li {
+    padding: 0.5rem 0;
+  }
+
+  .card a {
+    display: inline-block;
+    margin-top: 1rem;
+    text-decoration: none;
+    background: #0000;
+    color: black;
+    padding: 1rem 1rem;
+    border-radius: 5px;
+  }
+
+  .card a:hover {
+    background-color: #001212;
+  }
+
+  .lecture-series-card {
+    background: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .lecture-series-card h4 {
+    margin-top: 0;
+  }
+
+  .lecture-series-card ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .lecture-series-card ul li {
+    padding: 0.25rem 0;
+  }
+</style>
+
+<h1>Welcome, {{ request.user.first_name }}</h1>
+
+<h2>All Lectures</h2>
+<div class="card-container">
+  {% for scholar in scholars %}
+  <div class="card">
+    <a href="{% url 'scholar_detail' scholar.id %}">
+      <div class="lecture-series-card">
+        <ul>
+          {% for lecture in scholar.lectures.all %}
+          <li>Title: {{ lecture.title }} </li>
+          <li>Description:  {{ lecture.description }}</li>
+          <li>By:  {{ lecture.associated_scholar.first_name }} {{ lecture.associated_scholar.last_name }}</li>
+          {% empty %}
+          <li>No lectures found for this scholar.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+
+<h2>All Scholars</h2>
+<div class="card-container">
+  {% for scholar in scholars %}
+  <div class="card">
+    <a href="{% url 'scholar_detail' scholar.id %}">
+      <div class="lecture-series-card">
+        <h3>{{ scholar.user.first_name }}</h3>
+        <p>Bio: {{ scholar.bio }}</p>
+        <p>Specialization: {{ scholar.specialization }}</p>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

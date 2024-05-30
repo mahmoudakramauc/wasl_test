@@ -1,0 +1,24 @@
+/* Add this to your CSS file */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.action-links a {
+  text-decoration: none;
+  color: blue;
+  margin-left: 10px;
+}
+
+.btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.availability-list li {
+  margin-bottom: 10px;
+}

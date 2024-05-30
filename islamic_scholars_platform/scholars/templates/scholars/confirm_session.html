@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- confirm_session.html -->
+
+<h2>Confirm Session</h2>
+<p>Do you want to confirm the session with {{ session.user.first_name }} on {{ session.date_time }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" name="confirm">Confirm</button>
+    <button type="submit" name="reject">Reject</button>
+</form>
+
+{% endblock %}

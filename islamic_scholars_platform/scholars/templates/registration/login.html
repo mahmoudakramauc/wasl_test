@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Islamic Scholars Platform{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Basic reset */
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+
+        /* Use a more-intuitive box-sizing model */
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Header styles */
+        header {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Main content styles */
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        input[type='text'],
+        input[type='password'] {
+            padding: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type='text']:focus,
+        input[type='password']:focus {
+            border-color: #008cba;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #008cba;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 0.5rem; /* Adjust margin top */
+        }
+
+        button:hover {
+            background-color: #005f73;
+        }
+
+        p {
+            text-align: center;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #333;
+            color: white;
+        }
+
+        /* Signup button styles */
+        .signup-btn {
+            display: block;
+            text-align: center;
+            margin-top: 1rem; /* Adjust margin top */
+            color: #008cba;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .signup-btn:hover {
+            color: #005f73;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Islamic Scholars Platform</h1>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>Login</h2>
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+            <a href="{% url 'signup' %}" class="signup-btn">Sign Up</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 Islamic Scholars Platform. All rights reserved.</p>
+    </footer>
+</body>
+</html>

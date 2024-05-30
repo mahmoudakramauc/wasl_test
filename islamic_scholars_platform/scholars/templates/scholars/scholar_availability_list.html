@@ -1,0 +1,15 @@
+<!-- scholar_availability_list.html -->
+
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Scholar Availability List</h1>
+  {% for item in availability_data %}
+    <h2>{{ item.scholar }}</h2>
+    {% for availability in item.availability %}
+      <p>Date: {{ availability.date }}</p>
+      <p>Start Time: {{ availability.start_time }}</p>
+      <p>End Time: {{ availability.end_time }}</p>
+      <!-- Add any other relevant information here -->
+    {% endfor %}
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,42 @@
+<!-- session_detail.html -->
+
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Session Details</h1>
+<p><strong>Scholar:</strong> {{session.scholar.first_name }}</p>
+<p><strong>Date & Time:</strong> {{ session.date_time }}</p>
+<p><strong>Duration:</strong> {{ session.duration }} minutes</p>
+<p><strong>Confirmation Status:</strong> {% if session.is_confirmed %}Confirmed{% else %}Pending{% endif %}</p>
+
+{% if request.user == session.scholar %}
+  {% if not session.is_confirmed %}
+    <form method="post" action="{% url 'confirm_session' session.id %}">
+      {% csrf_token %}
+      <input type="hidden" name="confirmation_status" value="confirm">
+      <button type="submit">Confirm Session</button>
+    </form>
+    <form method="post" action="{% url 'confirm_session' session.id %}">
+      {% csrf_token %}
+      <input type="hidden" name="confirmation_status" value="reject">
+      <button type="submit">Reject Session</button>
+    </form>
+      <p>This session is awaiting confirmation from the scholar.</p>
+  {% else %}
+    <p>Session confirmed.</p>
+  {% endif %}
+{% else %}
+{% if request.user == session.user %}
+  {% if session.is_confirmed %}
+    <p>Session confirmed.</p>
+      {% else %}
+      <p>This session is awaiting confirmation from the scholar.</p>
+
+  {% endif %}
+{% endif %}
+
+{% endif %}
+
+
+<a href="{% url 'cancel_session' session.id %}" class="btn">Cancel Session</a>
+{% endblock %}

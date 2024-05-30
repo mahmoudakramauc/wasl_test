@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 1rem;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+    padding: 1rem;
+    width: calc(33% - 2rem);
+  }
+
+  .card h3 {
+    margin-top: 0;
+  }
+
+  .card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .card ul li {
+    padding: 0.5rem 0;
+  }
+
+  .card a {
+    display: inline-block;
+    margin-top: 0.5rem;
+    text-decoration: none;
+    background: #009879;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+  }
+
+  .card a:hover {
+    background-color: #007961;
+  }
+
+  @media (max-width: 1024px) {
+    .card {
+      width: calc(50% - 2rem);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      width: calc(100% - 2rem);
+    }
+  }
+  .lecture-series-card {
+    background: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .lecture-series-card h4 {
+    margin-top: 0;
+  }
+
+  .lecture-series-card ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .lecture-series-card ul li {
+    padding: 0.25rem 0;
+  }
+</style>
+  <h1>My Dashboard</h1>
+  <h2>Welcome, {{ request.user.first_name }}</h2>
+  <h3>User Image</h3>
+  <td>
+    {% if user.scholar.image %}
+      <img src="{{ scholar.image.url }}" alt="Scholar Image" style="max-width: 100px; max-height: 100px;">
+    {% else %}
+      No Image Available
+    {% endif %}
+  </td>
+  <h2>My Lectures</h2>
+  <table class="lectures-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Image</th> <!-- Add a column for the lecture image -->
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for lecture in lectures %}
+      <tr>
+        <td>{{ lecture.title }}</td>
+        <td>{{ lecture.description }}</td>
+        <td>{{ lecture.location }}</td> <!-- Display location -->
+        <td>
+          {% if lecture.image %}
+            <img src="{{ lecture.image.url }}" alt="Lecture Image" style="max-width: 100px; max-height: 100px;">
+          {% else %}
+            No Image Available
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'edit_lecture' lecture.id %}">Edit</a> | 
+          <a href="{% url 'delete_lecture' lecture.id %}">Delete</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">No lectures found</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Add a Lecture</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ lecture_form.as_p }}
+    <button type="submit" name="lecture_form">Add Lecture</button>
+  </form>
+
+  <h2>My Availability</h2>
+  {% if availability %}
+  <table>
+    <thead>
+      <tr>
+        <th>Day</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for avail in availability %}
+      <tr>
+        <td>{{ avail.day_of_week }}</td>
+        <td>{{ avail.start_time }}</td>
+        <td>{{ avail.end_time }}</td>
+        <td>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="availability_id" value="{{ avail.id }}">
+            {{ edit_availability_form.as_p }}
+            <a href="{% url 'edit_availability' avail.id %}">Edit</a> | 
+            <a href="{% url 'delete_availability' avail.id %}">Delete</a>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  <h2>Add Availability</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ availability_form.as_p }}
+    <button type="submit" name="availability_form">Add Availability</button>
+  </form>
+
+
+
+<h2>My Sessions</h2>
+{% if sessions %}
+<div class="card-container">
+  {% for session in sessions %}
+  <div class="card">
+    <h3>Session with {{ session.scholar.first_name }}</h3>
+    <p>Date & Time: {{ session.date_time }}</p>
+    <p>Duration: {{ session.duration }} minutes</p>
+    <p>Confirmed: {% if session.is_confirmed %}Yes{% else %}No{% endif %}</p>
+    {% if not session.is_confirmed %}
+    <form method="post" action="{% url 'confirm_session' session.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="confirmation_status" value="confirm">
+        <button type="confirm">Confirm Session</button>
+    </form>
+    {% else %}
+    <p>Session confirmed.</p>
+    {% endif %}
+    <a href="{% url 'cancel_session' session.id %}" class="btn btn-danger">Cancel Session</a>
+    
+    <!-- Form for editing session -->
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="session_id" value="{{ session.id }}">
+        {{ edit_session_form.as_p }}
+        <a href="{% url 'edit_session' session.id %}">Edit</a>
+        <a href="{% url 'session_detail' session.id %}">Details</a>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No sessions booked yet.</p>
+{% endif %}
+
+
+{% endblock %}

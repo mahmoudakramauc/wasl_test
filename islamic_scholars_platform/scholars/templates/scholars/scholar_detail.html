@@ -1,0 +1,32 @@
+<!-- scholar_detail.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholar Details</title>
+</head>
+<body>
+    <h1>Scholar Details</h1>
+    <p>Name: {{ scholar.user.first_name }} {{ scholar.user.last_name }}</p>
+    <p>Bio: {{ scholar.bio }}</p>
+    <p>Specialization: {{ scholar.specialization }}</p>
+    <!-- Add more scholar details as needed -->
+     <div class="lecture-series-card">
+      <h3>Lectures Provided:</h3>
+      <ul>
+        {% for lecture in scholar.lectures.all %}
+        <li>Title: {{ lecture.title }} </li>
+        <li>Description:  {{ lecture.description }}</li>
+        {% empty %}
+        <li>No lectures found for this scholar.</li>
+        {% endfor %}
+      </ul>
+    </div> 
+    <!-- End of lecture series card -->
+</body>
+</html>
+{% endblock %}
